@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, ChangeEvent } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const InputText = () => {
+  // 保持されいているテキストの状態
+  const [text, setText] = useState('')
+
+  // 入力中のテキストの状態
+  const [inputTextValue, setInputTextValue] = useState('')
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => { setInputTextValue(event.target.value) }
+
+  const handleClick = () => {
+    setText(inputTextValue);
+    setInputTextValue('');
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="App">
+        <h1>I love {text}!!!</h1>
+        <input type="text" value={inputTextValue} onChange={handleChange} />
+        <input type="button" value="Submit" onClick={handleClick} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
+}
+
+function App() {
+  return <InputText />
 }
 
 export default App
