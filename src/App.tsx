@@ -1,6 +1,35 @@
 import { useState, ChangeEvent } from 'react'
 import './App.css'
 
+const items = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'orange', label: 'Orange' },
+  { value: 'banana', label: 'Banana' }
+]
+
+const SelectItems = items.map((item) => {
+  return (
+    <option key={item.value} value={item.value}>
+      {item.label}
+    </option>
+  );
+});
+
+const InputSelectBox = () => {
+  const [selectedValue, setSelectedValue] = useState(items[0].value)
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => { setSelectedValue(e.target.value) };
+
+  return (
+    <div className="App">
+      <p>現在の値: <b>{selectedValue}</b></p>
+      <select value={selectedValue} onChange={handleChange}>
+        {SelectItems}
+      </select>
+    </div>
+  );
+}
+
 const InputText = () => {
   // 保持されいているテキストの状態
   const [text, setText] = useState('')
@@ -8,7 +37,7 @@ const InputText = () => {
   // 入力中のテキストの状態
   const [inputTextValue, setInputTextValue] = useState('')
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => { setInputTextValue(event.target.value) }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => { setInputTextValue(e.target.value) }
 
   const handleClick = () => {
     setText(inputTextValue);
@@ -27,7 +56,12 @@ const InputText = () => {
 }
 
 function App() {
-  return <InputText />
+  return (
+    <>
+      <InputText />
+      <InputSelectBox />
+    </>
+  )
 }
 
 export default App
