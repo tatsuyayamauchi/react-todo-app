@@ -1,6 +1,60 @@
 import { useState, ChangeEvent } from 'react'
 import './App.css'
 
+
+interface CheckedBtnProps {
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  checked: CheckedItem[]
+}
+
+interface CheckedItem {
+  value: string;
+  label: string;
+  checked: boolean;
+}
+
+const checkedItems: CheckedItem[] = [
+  { value: 'apple', label: 'Apple', checked: false },
+  { value: 'orange', label: 'Orange',checked: false },
+  { value: 'banana', label: 'Banana', checked: false }
+];
+
+const CheckedBtnItems: React.FC<CheckedBtnProps> = (props) => {
+  return (
+    <>
+      {props.checked.map((item, index) => (
+        <label key={index}>
+          <input type="checkbox" value={item.value} onChange={props.onChange} checked={item.checked} />
+          {item.label}
+        </label>
+      ))}
+    </>
+  );
+};
+
+const InputCheckBox = () => {
+  const [checkedValues, setCheckedValues] = useState(checkedItems)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+
+    setCheckedValues(prev => {
+      return prev.map(item => {
+        return item.value === value ? { ...item, checked: checked} : item
+      });
+    });
+  }
+
+  const stateOfCheckedValues = checkedValues.filter(item => item.checked).map(item => item.value);
+
+  return (
+    <div className="App">
+      <p>現在の値: <b>{stateOfCheckedValues.join(', ')}</b></p>
+        <CheckedBtnItems onChange={handleChange} checked={checkedValues} />
+    </div>
+  )
+}
+
 const items = [
   { value: 'apple', label: 'Apple' },
   { value: 'orange', label: 'Orange' },
@@ -60,6 +114,7 @@ function App() {
     <>
       <InputText />
       <InputSelectBox />
+      <InputCheckBox />
     </>
   )
 }
