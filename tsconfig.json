@@ -18,8 +18,19 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vitest/globals"],
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "node_modules/vitest/global.d.ts",
+    "vite.config.ts",
+    "test/setup.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
